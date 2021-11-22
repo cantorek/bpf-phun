@@ -111,6 +111,8 @@ int track(struct __sk_buff *skb) {
 
     struct tcphdr *tcp = (struct tcphdr *)(data + l4_off);
 
+    // this struct is used to pass info through map to userspace programm
+    // it is a bit simpler that tcp and ip headers but uses same types for simplicity
     struct connection conn = {
         .sip = ip->saddr,
         .dip = ip->daddr,
@@ -124,7 +126,7 @@ int track(struct __sk_buff *skb) {
     if(tcp->ack)
         return TC_ACT_OK; // skip if SYN-ACK
 
-    printk("SYN %u %u \n", conn.sip, ip->saddr);
+    // printk("SYN %u %u \n", conn.sip, ip->saddr);
     int *err;
     err = map_push_elem(&conn_map, &conn, BPF_ANY); // BPF_ANY = update or add elements
     if(err)

@@ -1,4 +1,4 @@
-.PHONY: install uninstall clean build docker all
+.PHONY: install uninstall clean build docker mod all
 
 CC=clang
 ARCH=$(shell uname -m)
@@ -21,6 +21,7 @@ all: build
 	${CC} -c ${CFLAGS} ${INCLUDES} $< -o $@
 
 filter:
+	${GOCMD} mod tidy
 	${GOFLAGS} ${GOCMD} build -o $@ ${GOSRCDIR}/*.go
 
 #and this is explicit to limit scope
