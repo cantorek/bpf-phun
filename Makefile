@@ -1,4 +1,4 @@
-.PHONY: install uninstall clean build docker mod all
+.PHONY: install uninstall clean build docker run all
 
 CC=clang
 ARCH=$(shell uname -m)
@@ -30,16 +30,14 @@ docker:
 	${DOCKERCMD} build -t ${IMAGENAME} .
 
 run: docker
-	docker run --privileged --network=host -v/sys/fs/bpf:/sys/fs/bpf -ti filter
+	docker run --privileged --network=host -v/sys/fs/bpf:/sys/fs/bpf -ti ${IMAGENAME}
 
-#same here
 clean:
 	rm -r filter.o filter
 
 uninstall:
 	tc qdisc del dev eth0 clsact
 
-#need to uninstall before we can install (and we need to build of course...)
 install: build
 	tc qdisc add dev eth0 clsact
 	tc filter add dev eth0 ingress bpf da obj filter.o sec in
