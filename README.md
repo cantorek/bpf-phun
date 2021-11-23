@@ -40,12 +40,12 @@ libc-dev
 golang1.17.3+
 
 ## Build
-### Docker
+#### Docker
 Simply run:
 
 `make docker`
 
-### Local
+#### Local
 `make`
 
 ## Test
@@ -57,7 +57,7 @@ Feel free to run tests in a container.
 ## Run
 By default the program will attach to `eth0`. If you wish to change that, edit the `Makefile`.
 
-### Docker
+#### Docker
 `make run`
 
 or
@@ -67,7 +67,7 @@ or
 Note that container needs to run with network type host and be privileged to have access to bpf.
 It is possible to control more granuralry using cgroups, but for now this is enough.
 
-### Local
+#### Local
 `make install` to install bpf program to eth0
 
 `./filter` - to run the filter handler
