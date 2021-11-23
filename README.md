@@ -40,12 +40,19 @@ libc-dev
 golang1.17.3+
 
 ## Build
+### Docker
 Simply run:
 
 `make docker`
 
+### Local
+`make`
 
-Or if you wish to build locally run `make`
+## Test
+`make tests`
+
+Tests are not a dependency of docker build because they will fail when building the image.
+Feel free to run tests in a container.
 
 ## Run
 By default the program will attach to `eth0`. If you wish to change that, edit the `Makefile`.
