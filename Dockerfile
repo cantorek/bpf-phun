@@ -12,4 +12,4 @@ COPY . .
 
 RUN make filter
 
-CMD ["./entrypoint.sh"]
+CMD ["./docker_entrypoint.sh"]

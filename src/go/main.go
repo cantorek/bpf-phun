@@ -64,7 +64,7 @@ func (f *Filter) Init() error {
 
 	if err != nil {
 		log.Panic("Error initializing filter:", err)
-		return err
+		return err // i know that this will never be reached but it's easier to read this way, at least for me
 	}
 
 	f.denyHash, err = OpenMap(f.denyMapPath)
@@ -72,8 +72,6 @@ func (f *Filter) Init() error {
 		log.Panic("Error initializing filter:", err)
 		return err
 	}
-
-	f.connMapPath = "twoja stara"
 
 	return nil
 }
@@ -146,7 +144,7 @@ func (f *Filter) Count() error {
 	log.Print(ipv4.ToDots(btos32(conn.sip)), ":", btos16(conn.sport), " -> ", ipv4.ToDots(btos32(conn.dip)), ":", btos16(conn.dport)) // debug output
 
 	lock.Lock()
-	if !contains(f.connMap[conn.sip], conn.dport) { // check if port already added (multiple connections to the same port are OK). This method is semi efficient, there are other ways to do it.
+	if !contains(f.connMap[conn.sip], conn.dport) { // check if port already added (multiple connections to the same port are OK). This method is semi efficient, there are other ways to do it (hash), but for now it's enough.
 		f.connMap[conn.sip] = append(f.connMap[conn.sip], conn.dport) //add a SOURCE ip as key and DESTINATION PORT in a slice to get number of destination ports by source ip. Enough for this use case.
 	}
 	lock.Unlock()
