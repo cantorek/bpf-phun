@@ -25,7 +25,7 @@ all: build
 tests:
 	${GOCMD} test -v ${GOSRCDIR}/*.go
 
-filter: tests
+filter:
 	${GOFLAGS} ${GOCMD} build -o $@ ${GOSRCDIR}/*.go
 
 #and this is explicit to limit scope
