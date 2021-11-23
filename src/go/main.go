@@ -23,7 +23,7 @@ type connection struct {
 
 var (
 	newConnectionsCount = promauto.NewCounter(prometheus.CounterOpts{ //prom variable for connection count
-		Name: "oskar_interview_new_connections_count",
+		Name: "network_new_connections_count",
 		Help: "Number of new connections attempts since program start",
 	})
 )

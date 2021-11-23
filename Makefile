@@ -1,5 +1,7 @@
 .PHONY: install uninstall clean build docker run all
 
+
+INTERFACE=eth0
 CC=clang
 ARCH=$(shell uname -m)
 CFLAGS=-O2 -Wall -target bpf
@@ -29,16 +31,16 @@ build: filter.o filter
 docker:
 	${DOCKERCMD} build -t ${IMAGENAME} .
 
-run: docker
+run:
 	docker run --privileged --network=host -v/sys/fs/bpf:/sys/fs/bpf -ti ${IMAGENAME}
 
 clean:
 	rm -r filter.o filter
 
 uninstall:
-	tc qdisc del dev eth0 clsact
+	tc qdisc del dev ${INTERFACE} clsact
 
 install: build
-	tc qdisc add dev eth0 clsact
-	tc filter add dev eth0 ingress bpf da obj filter.o sec in
-	tc filter add dev eth0 egress bpf da obj filter.o sec out
+	tc qdisc add dev ${INTERFACE} clsact
+	tc filter add dev ${INTERFACE} ingress bpf da obj filter.o sec in
+	tc filter add dev ${INTERFACE} egress bpf da obj filter.o sec out
