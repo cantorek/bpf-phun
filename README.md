@@ -4,7 +4,7 @@
 This repository provides sample eBPF program that serves as a connection counter and simple packet filter and port scan detector.
 It leverages eXpress Data Path to scan for SYN packets.
 
-Made for fun, with love.
+Made for fun, with love. My first golang app :-)
 
 ## Description
 This service consist of two programs.
