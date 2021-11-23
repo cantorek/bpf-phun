@@ -1,4 +1,4 @@
-.PHONY: install uninstall clean build docker run all
+.PHONY: install uninstall clean build docker run all tests
 
 
 INTERFACE=eth0
@@ -22,7 +22,10 @@ all: build
 %.o: ${CSRCDIR}/%.c
 	${CC} -c ${CFLAGS} ${INCLUDES} $< -o $@
 
-filter:
+tests:
+	${GOCMD} test -v ${GOSRCDIR}/*.go
+
+filter: tests
 	${GOFLAGS} ${GOCMD} build -o $@ ${GOSRCDIR}/*.go
 
 #and this is explicit to limit scope
